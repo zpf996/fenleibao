@@ -4,13 +4,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import online.zpf666.fenleibao.jiazai_Activity;
+
 //创建数据库，不是操作类
 public class MyOpenHelper extends SQLiteOpenHelper {
     private static final String name="fenlei.db";      //数据库名称
     private static final int version=1;                //版本号
 
     //构造函数
-    public MyOpenHelper(Context context){
+    public MyOpenHelper(jiazai_Activity jiazai_activity, String s, Context context, int i){
         super(context,name,null,version);
     }
     @Override

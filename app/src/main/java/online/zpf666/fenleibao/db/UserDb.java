@@ -21,15 +21,18 @@ public class UserDb {
         if (user==null){
             return false;
         }
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("name",user.getName());
-        contentValues.put("id",user.getId());
-        contentValues.put("phone",user.getPhone());
+        else {
 
-        long insertResult=db.insert("Login",null,contentValues);
-        if (insertResult==-1){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("name", user.getName());
+            contentValues.put("id", user.getId());
+            contentValues.put("phone", user.getPhone());
+            long insertResult = db.insert("Login", null, contentValues);
+        }
+/*        if (insertResult==-1){
             return false;
         }
+        */
         return true;
     }
     //删除方法
@@ -71,11 +74,11 @@ public class UserDb {
                 return true;
     }
     //查询操作
-    public user query(user user){
-        user result=new user();
+    public user query(user user) {
+        user result = new user();
         //判断非空
-        if (user==null){
-            Log.e("my sqlite","user is null");
+        if (user == null) {
+            Log.e("my sqlite", "user is null");
             return null;
         }
         /**
@@ -94,9 +97,9 @@ public class UserDb {
          * having（分组条件）
          * orderby （排序方式）
          */
-        Cursor cursor=db.query("user",null,"id=?",
-                new String[]{user.getId()+""},null,null,null);
-        while(cursor.moveToNext()){
+        Cursor cursor = db.query("user", null, "id=?",
+                new String[]{user.getId() + ""}, null, null, null);
+        while (cursor.moveToNext()) {
             result.setId(cursor.getInt(2));
             result.setName(cursor.getString(4));
             result.setPhone(cursor.getInt(11));
