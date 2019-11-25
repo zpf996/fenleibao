@@ -3,6 +3,7 @@ package online.zpf666.fenleibao;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import online.zpf666.fenleibao.db.MyOpenHelper;
 
 public class login_forget_Activity extends AppCompatActivity {
 
@@ -41,6 +43,7 @@ public class login_forget_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login_forget_);
         ButterKnife.bind(this);
+        MyOpenHelper myOpenHelper=new MyOpenHelper(this);
     }
     @OnClick({R.id.login_Forget_button_qrfs,R.id.login_Forget_button_qrxg})
     public void OnClick(View v){

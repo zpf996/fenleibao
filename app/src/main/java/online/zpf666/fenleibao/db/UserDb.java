@@ -16,23 +16,24 @@ public class UserDb {
         this.db=db;
     }
     //insert方法
-    public boolean insertUser(user user){
+    public boolean insertUser(String id,String passwd){
+        long insertResult=0;
         //判断user表是否为空
-        if (user==null){
+        if (!CheckIsDataAlreadyInDBorNot(id)){
             return false;
         }
         else {
 
             ContentValues contentValues = new ContentValues();
-            contentValues.put("name", user.getName());
-            contentValues.put("id", user.getId());
-            contentValues.put("phone", user.getPhone());
-            long insertResult = db.insert("Login", null, contentValues);
+ //           contentValues.put("name", user.getName());
+            contentValues.put("id", id);
+ //           contentValues.put("phone", user.getPhone());
+            contentValues.put("passwd", passwd);
+            insertResult = db.insert("User", null, contentValues);
         }
-/*        if (insertResult==-1){
+        if (insertResult==-1){
             return false;
         }
-        */
         return true;
     }
     //删除方法
@@ -60,8 +61,8 @@ public class UserDb {
         }
         ContentValues contentValues=new ContentValues();
         contentValues.put("id",user.getId());
-        contentValues.put("name",user.getName());
-        contentValues.put("phone",user.getPhone());
+    //    contentValues.put("name",user.getName());
+    //    contentValues.put("phone",user.getPhone());
 
         int updateResult=db.update("user",contentValues,"id=?",
                 new String[]{user.getId()+""});
@@ -101,9 +102,23 @@ public class UserDb {
                 new String[]{user.getId() + ""}, null, null, null);
         while (cursor.moveToNext()) {
             result.setId(cursor.getInt(2));
-            result.setName(cursor.getString(4));
-            result.setPhone(cursor.getInt(11));
+     //       result.setName(cursor.getString(4));
+     //       result.setPhone(cursor.getInt(11));
         }
         return result;
+    }
+    public boolean CheckIsDataAlreadyInDBorNot(String v)
+    {
+        user result = new user();
+        Cursor cursor = db.query("User", null, "id=?",
+                new String[]{v}, null, null, null);
+
+        if (cursor.getCount()>0){
+            cursor.close();
+            return  true;
+        }
+        cursor.close();
+        return false;
+
     }
 }

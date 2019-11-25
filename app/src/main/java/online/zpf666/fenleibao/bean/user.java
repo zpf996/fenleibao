@@ -2,8 +2,9 @@ package online.zpf666.fenleibao.bean;
 
 public class user {
     private  int id;
-    private  String name;
-    private int phone;
+    private  String passwd;
+//    private  String name;
+//    private int phone;
 
     public int getId() {
         return id;
@@ -13,6 +14,14 @@ public class user {
         this.id = id;
     }
 
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
+    }
+    public String getPasswd()
+    {
+        return passwd;
+    }
+/*
     public String getName() {
         return name;
     }
@@ -28,4 +37,10 @@ public class user {
     public void setPhone(int phone) {
         this.phone = phone;
     }
+*/
+    @Override
+    public String toString() {
+        return "user{"+"id="+id+",passwd="+passwd+"/"+",name="+'}';
+    }
+    //name+"/"+",phone="+phone
 }

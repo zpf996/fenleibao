@@ -8,8 +8,6 @@ import online.zpf666.fenleibao.db.MyOpenHelper;
 
 
 public class jiazai_Activity extends AppCompatActivity {
-
-    MyOpenHelper myOpenHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +15,6 @@ public class jiazai_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_jiazai_);
 
-        myOpenHelper=new MyOpenHelper(this,"fengleibao.db",null,1);
         //新建一个子线程
         Thread thread =new Thread(){
             @Override

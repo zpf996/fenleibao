@@ -3,6 +3,7 @@ package online.zpf666.fenleibao;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import online.zpf666.fenleibao.db.MyOpenHelper;
 import online.zpf666.fenleibao.db.UserDb;
 import online.zpf666.fenleibao.bean.user;
 import butterknife.BindView;
@@ -36,7 +39,8 @@ public class login_1_Activity extends AppCompatActivity implements View.OnClickL
     UserDb user1;
     user user;
 
-
+MyOpenHelper myOpenHelper;
+SQLiteDatabase sqLiteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,8 @@ public class login_1_Activity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_login_1_);
 
         ButterKnife.bind(this);
+        myOpenHelper=new MyOpenHelper(login_1_Activity.this);
+        sqLiteDatabase=myOpenHelper.getReadableDatabase();
     }
     @OnClick({R.id.login_1_button_dll,R.id.login_1_text_wjmm,R.id.login_1_text_zczh})
     public void onClick(View view)

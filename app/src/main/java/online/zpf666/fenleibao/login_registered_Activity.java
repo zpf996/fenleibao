@@ -2,6 +2,7 @@ package online.zpf666.fenleibao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import online.zpf666.fenleibao.db.MyOpenHelper;
 
 public class login_registered_Activity extends AppCompatActivity {
 
@@ -33,6 +35,8 @@ public class login_registered_Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login_registered_);
         ButterKnife.bind(this);
+
+        MyOpenHelper myOpenHelper=new MyOpenHelper(this);
     }
     @OnClick({R.id.login_registered_button_qrzc})
     public void OnClick(View v){

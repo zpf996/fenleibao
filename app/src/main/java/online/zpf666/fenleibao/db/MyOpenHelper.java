@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import online.zpf666.fenleibao.jiazai_Activity;
+import online.zpf666.fenleibao.login_1_Activity;
 
 //创建数据库，不是操作类
 public class MyOpenHelper extends SQLiteOpenHelper {
@@ -12,13 +13,14 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     private static final int version=1;                //版本号
 
     //构造函数
-    public MyOpenHelper(jiazai_Activity jiazai_activity, String s, Context context, int i){
+    public MyOpenHelper(Context context){
         super(context,name,null,version);
     }
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //创建表
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS "+
+        sqLiteDatabase.execSQL("create table if not exists "+
                 "User(id INTEGER primary key autoincrement,"+"" +
                 "passwd varchar(8),"+"" +
                 "phone tinyint(11)," +
