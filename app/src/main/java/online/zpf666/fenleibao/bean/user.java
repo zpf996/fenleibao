@@ -21,26 +21,12 @@ public class user {
     {
         return passwd;
     }
-/*
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPhone() {
-        return phone;
-    }
-
-    public void setPhone(int phone) {
-        this.phone = phone;
-    }
-*/
     @Override
     public String toString() {
-        return "user{"+"id="+id+",passwd="+passwd+"/"+",name="+'}';
+        return "user{" +
+                "id=" + id +
+                ", passwd='" + passwd + '\'' +
+                '}';
     }
-    //name+"/"+",phone="+phone
 }

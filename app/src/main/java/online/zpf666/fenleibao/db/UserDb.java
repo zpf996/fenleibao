@@ -4,13 +4,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
+import online.zpf666.fenleibao.db.MyOpenHelper;
 import online.zpf666.fenleibao.bean.user;
-
 //数据库的操作类,增删该查功能实现
 public class UserDb {
-    private SQLiteDatabase db;
-
+    MyOpenHelper myopenhelper;
+     SQLiteDatabase db;
+    user user;
     //构造函数
     public UserDb(SQLiteDatabase db){
         this.db=db;
@@ -26,7 +26,7 @@ public class UserDb {
 
             ContentValues contentValues = new ContentValues();
  //           contentValues.put("name", user.getName());
-            contentValues.put("id", id);
+            contentValues.put("id",id);
  //           contentValues.put("phone", user.getPhone());
             contentValues.put("passwd", passwd);
             insertResult = db.insert("User", null, contentValues);
@@ -34,6 +34,7 @@ public class UserDb {
         if (insertResult==-1){
             return false;
         }
+        Log.e("registered","is true");
         return true;
     }
     //删除方法
@@ -51,28 +52,6 @@ public class UserDb {
         }
         else
             return true;
-    }
-    //更新操作
-    public boolean Update(user user){
-
-        if (user==null){
-            Log.e("my sqlite","user is null");
-            return false;
-        }
-        ContentValues contentValues=new ContentValues();
-        contentValues.put("id",user.getId());
-    //    contentValues.put("name",user.getName());
-    //    contentValues.put("phone",user.getPhone());
-
-        int updateResult=db.update("user",contentValues,"id=?",
-                new String[]{user.getId()+""});
-
-        if (updateResult==0){
-        Log.e("my sqlite","update is failure");
-        return false;
-    }
-        else
-                return true;
     }
     //查询操作
     public user query(user user) {
@@ -107,12 +86,10 @@ public class UserDb {
         }
         return result;
     }
+    //查询用户是否存在
     public boolean CheckIsDataAlreadyInDBorNot(String v)
     {
-        user result = new user();
-        Cursor cursor = db.query("User", null, "id=?",
-                new String[]{v}, null, null, null);
-
+        Cursor cursor =db.rawQuery("select * from Login where id=?",new String[]{ v });
         if (cursor.getCount()>0){
             cursor.close();
             return  true;
@@ -121,4 +98,23 @@ public class UserDb {
         return false;
 
     }
+    //注册操作
+    public boolean registered(String username,String passwd)
+    {
+        db.execSQL("insert into user(username,passwd) values (?,?)", new Object[] { username, passwd});
+        return true;
+    }
+    //登陆操作
+    public boolean Logined(String username,String passwd)
+    {
+
+        Cursor cursor =db.rawQuery("select * from Login where id=? and passwd=?",new String[]{ username,passwd });
+        if (cursor.moveToFirst()) {
+            cursor.close();
+            return true;
+        }
+        return false;
+    }
+    //忘记密码
+
 }

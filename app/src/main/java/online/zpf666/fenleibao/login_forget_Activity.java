@@ -2,6 +2,7 @@ package online.zpf666.fenleibao;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -37,13 +38,17 @@ public class login_forget_Activity extends AppCompatActivity {
 
     @BindView(R.id.login_Forget_button_qrxg)
     ImageView  login_Forget_button_qrxg;
+
+    MyOpenHelper myOpenHelper;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login_forget_);
         ButterKnife.bind(this);
-        MyOpenHelper myOpenHelper=new MyOpenHelper(this);
+        myOpenHelper=new MyOpenHelper(this);
+        db=myOpenHelper.getReadableDatabase();
     }
     @OnClick({R.id.login_Forget_button_qrfs,R.id.login_Forget_button_qrxg})
     public void OnClick(View v){
@@ -84,8 +89,10 @@ public class login_forget_Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "验证码输入错误", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else {
+                else if(forgetpasswd(username,passwd)){
                     Toast.makeText(getApplicationContext(), "密码已修改", Toast.LENGTH_SHORT).show();
+                    Intent intent2=new Intent(login_forget_Activity.this,login_1_Activity.class);
+                    startActivity(intent2);
                 }
                 break;
         }
@@ -99,5 +106,13 @@ public class login_forget_Activity extends AppCompatActivity {
             login_forget_Activity.this.finish();
     }
     return false;
+    }
+    public boolean forgetpasswd(String username,String passwd)
+    {
+        ContentValues values=new ContentValues();
+        values.put("password",passwd);
+        db.update("user",values,"username=?",new String[]{username});
+        db.close();
+        return false;
     }
 }

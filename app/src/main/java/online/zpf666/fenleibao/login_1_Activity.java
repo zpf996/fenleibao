@@ -3,6 +3,7 @@ package online.zpf666.fenleibao;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -40,7 +41,7 @@ public class login_1_Activity extends AppCompatActivity implements View.OnClickL
     user user;
 
 MyOpenHelper myOpenHelper;
-SQLiteDatabase sqLiteDatabase;
+SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ SQLiteDatabase sqLiteDatabase;
 
         ButterKnife.bind(this);
         myOpenHelper=new MyOpenHelper(login_1_Activity.this);
-        sqLiteDatabase=myOpenHelper.getReadableDatabase();
+        db=myOpenHelper.getReadableDatabase();
     }
     @OnClick({R.id.login_1_button_dll,R.id.login_1_text_wjmm,R.id.login_1_text_zczh})
     public void onClick(View view)
@@ -76,16 +77,27 @@ SQLiteDatabase sqLiteDatabase;
                     Toast.makeText(getApplicationContext(),"请输入密码",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if(false)
+                else if(Logined(username,passwd))
                 {
-
-                }
-                else{
+                    Toast.makeText(getApplicationContext(),"登陆成功，即将跳转",Toast.LENGTH_SHORT).show();
                     Intent intent2=new Intent(login_1_Activity.this,index_Activity.class);
                     startActivity(intent2);
+                }else
+                {
+                    Toast.makeText(getApplicationContext(),"密码错误，请重新输入",Toast.LENGTH_SHORT).show();
                 }
                 break;
 
         }
+    }
+    public boolean Logined(String username,String passwd)
+    {
+
+        Cursor cursor =db.rawQuery("select * from user where username=? and password=?",new String[]{ username,passwd });
+        if (cursor.moveToFirst()) {
+            cursor.close();
+            return true;
+        }
+        return false;
     }
 }

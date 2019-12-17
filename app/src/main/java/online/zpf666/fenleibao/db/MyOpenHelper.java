@@ -9,7 +9,7 @@ import online.zpf666.fenleibao.login_1_Activity;
 
 //创建数据库，不是操作类
 public class MyOpenHelper extends SQLiteOpenHelper {
-    private static final String name="fenlei.db";      //数据库名称
+    private static final String name="fenlei";      //数据库名称
     private static final int version=1;                //版本号
 
     //构造函数
@@ -20,11 +20,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //创建表
-        sqLiteDatabase.execSQL("create table if not exists "+
-                "User(id INTEGER primary key autoincrement,"+"" +
-                "passwd varchar(8),"+"" +
-                "phone tinyint(11)," +
-                "name varchar(4))");
+        sqLiteDatabase.execSQL("create table user(id integer primary key autoincrement,username char(8),password char(8))");
         //sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS" +
          //       "Registered(id INTEGER primary key autoincrement,)");
 
